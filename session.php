@@ -1,5 +1,27 @@
 <?php
 require("User.php");
+
+class Session{
+    private $sessionId;
+    private $date;
+    public function __construct($sessionId, $date){
+        $this->sessionId = $sessionId;
+        $this->date = $date;
+    }
+
+    public function getSession(){
+        return "$this->date, $this->sessionId";
+    }
+
+    public function getSessionDate(){
+        return $this->date;
+    }
+
+    public function getSessionId(){
+        return $this->sessionId;
+    }
+}
+
 session_start();
 
 $users = [
@@ -14,16 +36,16 @@ $userIndex = isset($_GET['user']) ? $_GET['user'] : 0;
 $user = $users[$userIndex];
 
 $purchaseHistory = [
-    ["sessionId" => "ABC123", "date" => "2024-06-25"],
-    ["sessionId" => "DEF456", "date" => "2024-06-24"],
-    ["sessionId" => "GHI789", "date" => "2024-06-23"],
-    ["sessionId" => "JKL012", "date" => "2024-06-22"],
-    ["sessionId" => "MNO345", "date" => "2024-06-21"],
+    new Session("ABC123", "2024-06-25"),
+    new Session("DEF456", "2024-06-24"),
+    new Session("GHI789", "2024-06-23"),
+    new Session("JKL012", "2024-06-22"),
+    new Session("MNO345", "2024-06-21"),
 ];
 
 echo "<h2>{$user->getUser()}</h2>";
 echo "<ul>";
 foreach ($purchaseHistory as $purchase) {
-    echo "<li><a href='cart.php?sessionId={$purchase["sessionId"]}'>{$purchase["date"]}, {$purchase["sessionId"]}</a></li>";
+    echo "<li>{$purchase->getSessionDate()} - <a href='cart.php?sessionId={$purchase->getSessionId()}'>{$purchase->getSessionId()}</a></li>";
 }
 echo "</ul>";

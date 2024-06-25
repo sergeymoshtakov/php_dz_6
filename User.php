@@ -11,8 +11,4 @@ class User{
     public function getUser(){
         return "$this->name — $this->email";
     }
-
-    public function getName(){
-        return $this->name;
-    }
 }
